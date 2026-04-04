@@ -1,47 +1,81 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { Droplets, Calculator, BarChart3 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { ImagePlaceholder } from '@/components/image-placeholder'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
 })
 
+const features = [
+  {
+    icon: Droplets,
+    title: "Water Analysis",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.",
+  },
+  {
+    icon: Calculator,
+    title: "Cost Estimation",
+    description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+  },
+  {
+    icon: BarChart3,
+    title: "Productivity Index",
+    description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.",
+  },
+]
+
 function HomePage() {
   return (
-    <div className="flex flex-col items-center gap-12 py-16">
-      {/* Hero Section */}
-      <section className="flex flex-col items-center gap-6 text-center max-w-3xl">
-        <h1 className="text-5xl font-bold tracking-tight">
-          Welcome to Datathon 2026
-        </h1>
-        <p className="text-xl text-muted-foreground">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
-        <Button asChild size="lg" className="mt-4">
-          <Link to="/questionnaire">Get Started</Link>
-        </Button>
-      </section>
+    <div className="flex flex-col gap-6 h-[calc(100vh-8rem)]">
+      {/* Hero Card */}
+      <Card className="flex-1">
+        <div className="grid md:grid-cols-2 h-full">
+          <div className="p-6 md:p-8 flex items-center">
+            <ImagePlaceholder
+              aspectRatio="video"
+              label="Hero illustration"
+              className="w-full h-full min-h-[200px]"
+            />
+          </div>
+          <CardContent className="flex flex-col justify-center gap-4 p-6 md:p-8">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+              Welcome to Datathon 2026
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            <div className="pt-2">
+              <Button asChild size="lg">
+                <Link to="/questionnaire">Get Started</Link>
+              </Button>
+            </div>
+          </CardContent>
+        </div>
+      </Card>
 
-      {/* Content Section */}
-      <section className="flex flex-col gap-6 max-w-2xl text-muted-foreground">
-        <p>
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
-        </p>
-        <p>
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-          officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde
-          omnis iste natus error sit voluptatem accusantium doloremque
-          laudantium.
-        </p>
-        <p>
-          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
-          fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem
-          sequi nesciunt.
-        </p>
-      </section>
+      {/* Feature Cards */}
+      <div className="grid md:grid-cols-3 gap-4">
+        {features.map((feature) => (
+          <Card key={feature.title}>
+            <CardHeader className="pb-2">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <feature.icon className="h-5 w-5 text-primary" />
+                </div>
+                <CardTitle className="text-lg">{feature.title}</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="text-sm">
+                {feature.description}
+              </CardDescription>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   )
 }
