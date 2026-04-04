@@ -1,0 +1,94 @@
+import { MapPin } from "lucide-react"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import type { QuestionnaireData } from "@/hooks/use-questionnaire"
+
+interface StepLocationProps {
+  data: QuestionnaireData
+  updateField: <K extends keyof QuestionnaireData>(
+    field: K,
+    value: QuestionnaireData[K]
+  ) => void
+}
+
+export function StepLocation({ data, updateField }: StepLocationProps) {
+  const handleGeolocation = () => {
+    // Visual only - implementation to be added later
+    console.log("Geolocation button clicked - not implemented yet")
+  }
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="text-center">
+        <p className="text-sm text-muted-foreground mb-4">
+          Enter your field location manually or use your device's GPS
+        </p>
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full"
+          onClick={handleGeolocation}
+        >
+          <MapPin className="mr-2 h-4 w-4" />
+          Use My Location
+        </Button>
+      </div>
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">
+            Or enter manually
+          </span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="latitude">Latitude</Label>
+          <Input
+            id="latitude"
+            type="number"
+            placeholder="-90 to 90"
+            min="-90"
+            max="90"
+            step="0.000001"
+            value={data.latitude ?? ""}
+            onChange={(e) =>
+              updateField(
+                "latitude",
+                e.target.value ? parseFloat(e.target.value) : null
+              )
+            }
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="longitude">Longitude</Label>
+          <Input
+            id="longitude"
+            type="number"
+            placeholder="-180 to 180"
+            min="-180"
+            max="180"
+            step="0.000001"
+            value={data.longitude ?? ""}
+            onChange={(e) =>
+              updateField(
+                "longitude",
+                e.target.value ? parseFloat(e.target.value) : null
+              )
+            }
+          />
+        </div>
+      </div>
+
+      <p className="text-xs text-muted-foreground text-center">
+        Coordinates are used to determine local climate and soil conditions
+      </p>
+    </div>
+  )
+}
