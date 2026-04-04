@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+from backend.api_calls import get_temperature
+
 class FieldData(BaseModel):
     crop_type: str
     field_area: float
@@ -9,8 +11,10 @@ class FieldData(BaseModel):
     water_source: str
     mulching_used: bool
     previous_water_usage: float
+    latitude: float
+    longitude: float
 
-def ml_model(pre_data: FieldData) -> float:
+def ml_model(pre_data: FieldData, temperature: float) -> float:
     # Placeholder for ML model logic
     # In a real implementation, this function would load a trained ML model and use it to make predictions based on input data
     # field data consists of the pydantic data strucuture above, input into ml model then spit out API call :>
@@ -52,7 +56,9 @@ async def receive_field_data(field_data: FieldData):
     """Endpoint to receive field data from the frontend"""
     try:
         print(f"Received field data: {field_data}")
-        ml_output = ml_model(field_data)
+        # Would need Frontend to send the lat and long of the field/convert from a location
+        temp = get_temperature(field_data.latitude, field_data.longitude) 
+        ml_output = ml_model(field_data, temp)
         return {"success": True, "predicted_water_usage": ml_output}
     except Exception as e:
         print(f"Error processing field data: {e}")
