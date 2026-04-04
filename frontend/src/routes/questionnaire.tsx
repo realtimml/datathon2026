@@ -38,7 +38,10 @@ function QuestionnairePage() {
 
   const handleSubmit = () => {
     console.log('Form submitted:', data)
-    navigate({ to: '/results' })
+    navigate({
+      to: '/results',
+      search: { data: JSON.stringify(data) },
+    })
   }
 
   const currentStepInfo = stepTitles[currentStep - 1]
