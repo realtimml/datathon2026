@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { useQuestionnaire } from '@/hooks/use-questionnaire'
-import { SidebarProgress } from '@/components/questionnaire/sidebar-progress'
+import { WorkflowProgress } from '@/components/workflow-progress'
 import { SectionCard } from '@/components/questionnaire/section-card'
 import { StepCropInfo } from '@/components/questionnaire/step-crop-info'
 import { StepIrrigation } from '@/components/questionnaire/step-irrigation'
@@ -29,7 +29,7 @@ function QuestionnairePage() {
       {/* Sidebar */}
       <aside className="w-64 shrink-0 border-r p-4">
         <Card className="sticky top-4 p-4">
-          <SidebarProgress data={data} />
+          <WorkflowProgress currentPage="questionnaire" data={data} />
         </Card>
       </aside>
 
