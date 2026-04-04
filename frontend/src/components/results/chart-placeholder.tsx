@@ -8,12 +8,12 @@ interface ChartPlaceholderProps {
 
 export function ChartPlaceholder({ title, description }: ChartPlaceholderProps) {
   return (
-    <Card>
-      <CardHeader>
+    <Card className="h-full flex flex-col">
+      <CardHeader className="pb-2">
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="flex flex-col items-center justify-center h-48 border-2 border-dashed border-muted rounded-lg">
+      <CardContent className="flex-1">
+        <div className="flex flex-col items-center justify-center h-full border-2 border-dashed border-muted rounded-lg">
           <BarChart3 className="h-12 w-12 text-muted-foreground/50" />
           <p className="mt-2 text-sm text-muted-foreground">
             {description || "Chart coming soon"}
