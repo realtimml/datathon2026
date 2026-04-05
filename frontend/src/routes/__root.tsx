@@ -18,14 +18,14 @@ function RootLayout() {
                 to="/"
                 className="text-lg font-semibold hover:text-primary transition-colors"
               >
-                Datathon 2026
+                Green Thumb
               </Link>
-              <Link
+              {/* <Link
                 to="/"
                 className="text-muted-foreground hover:text-foreground transition-colors [&.active]:text-foreground [&.active]:font-medium"
               >
                 Home
-              </Link>
+              </Link> */}
             </div>
             <ThemeToggle />
           </nav>
