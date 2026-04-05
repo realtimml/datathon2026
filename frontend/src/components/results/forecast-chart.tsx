@@ -33,6 +33,7 @@ export function ForecastChart({ forecast }: ForecastChartProps) {
       day: "numeric",
     }),
     waterNeededLiters: day.waterNeededLiters,
+    pumpingCost: day.pumpingCost,
   }))
 
   return (
@@ -70,9 +71,32 @@ export function ForecastChart({ forecast }: ForecastChartProps) {
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  formatter={(value) =>
-                    `${Number(value).toLocaleString()} L`
-                  }
+                  formatter={(_value, _name, item) => {
+                    const row = item.payload as {
+                      waterNeededLiters: number
+                      pumpingCost: number
+                    }
+                    return (
+                      <div className="flex flex-col gap-1.5">
+                        <div className="flex justify-between gap-4">
+                          <span className="text-muted-foreground">
+                            Water needed
+                          </span>
+                          <span className="font-mono font-medium tabular-nums">
+                            {row.waterNeededLiters.toLocaleString()} L
+                          </span>
+                        </div>
+                        <div className="flex justify-between gap-4">
+                          <span className="text-muted-foreground">
+                            Est. pumping cost
+                          </span>
+                          <span className="font-mono font-medium tabular-nums">
+                            ${row.pumpingCost.toFixed(2)}
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  }}
                 />
               }
             />
