@@ -17,14 +17,13 @@ interface StepIrrigationProps {
   ) => void
 }
 
-const irrigationTypes = ["Drip", "Sprinkler", "Flood", "Furrow", "None"]
+const irrigationTypes = ["Canal", "Drip", "Rainfed", "Sprinkler"]
 
 const waterSources = [
   "Groundwater",
-  "River",
-  "Canal",
   "Rainwater",
-  "Municipal",
+  "Reservoir",
+  "River",
 ]
 
 export function StepIrrigation({ data, updateField }: StepIrrigationProps) {
@@ -41,7 +40,7 @@ export function StepIrrigation({ data, updateField }: StepIrrigationProps) {
           </SelectTrigger>
           <SelectContent>
             {irrigationTypes.map((type) => (
-              <SelectItem key={type} value={type.toLowerCase()}>
+              <SelectItem key={type} value={type}>
                 {type}
               </SelectItem>
             ))}
@@ -60,7 +59,7 @@ export function StepIrrigation({ data, updateField }: StepIrrigationProps) {
           </SelectTrigger>
           <SelectContent>
             {waterSources.map((source) => (
-              <SelectItem key={source} value={source.toLowerCase()}>
+              <SelectItem key={source} value={source}>
                 {source}
               </SelectItem>
             ))}

@@ -18,13 +18,19 @@ interface StepCropInfoProps {
 }
 
 const cropTypes = [
-  "Rice",
-  "Wheat",
-  "Corn",
-  "Soybean",
   "Cotton",
+  "Maize",
+  "Potato",
+  "Rice",
   "Sugarcane",
-  "Other",
+  "Wheat",
+]
+
+const cropGrowthStages = [
+  "Flowering",
+  "Harvest",
+  "Sowing",
+  "Vegetative",
 ]
 
 const mulchingOptions = ["Yes", "No"]
@@ -43,8 +49,27 @@ export function StepCropInfo({ data, updateField }: StepCropInfoProps) {
           </SelectTrigger>
           <SelectContent>
             {cropTypes.map((crop) => (
-              <SelectItem key={crop} value={crop.toLowerCase()}>
+              <SelectItem key={crop} value={crop}>
                 {crop}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="Crop_Growth_Stage">Crop Growth Stage</Label>
+        <Select
+          value={data.Crop_Growth_Stage}
+          onValueChange={(value) => updateField("Crop_Growth_Stage", value)}
+        >
+          <SelectTrigger id="Crop_Growth_Stage">
+            <SelectValue placeholder="Select growth stage" />
+          </SelectTrigger>
+          <SelectContent>
+            {cropGrowthStages.map((stage) => (
+              <SelectItem key={stage} value={stage}>
+                {stage}
               </SelectItem>
             ))}
           </SelectContent>
@@ -81,7 +106,7 @@ export function StepCropInfo({ data, updateField }: StepCropInfoProps) {
           </SelectTrigger>
           <SelectContent>
             {mulchingOptions.map((option) => (
-              <SelectItem key={option} value={option.toLowerCase()}>
+              <SelectItem key={option} value={option}>
                 {option}
               </SelectItem>
             ))}
