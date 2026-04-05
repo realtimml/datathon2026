@@ -36,12 +36,7 @@ export function ForecastDayCard({
   isToday = false,
 }: ForecastDayCardProps) {
   return (
-    <Card
-      className={cn(
-        "min-w-48 shrink-0 flex flex-col lg:min-w-0 lg:shrink",
-        isToday && "ring-2 ring-primary",
-      )}
-    >
+    <Card className="min-w-48 shrink-0 flex flex-col lg:min-w-0 lg:shrink">
       <CardHeader className="pb-2">
         <CardTitle
           className={cn(
