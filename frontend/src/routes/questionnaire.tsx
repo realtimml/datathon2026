@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { useQuestionnaire } from '@/hooks/use-questionnaire'
@@ -8,6 +10,7 @@ import { StepCropInfo } from '@/components/questionnaire/step-crop-info'
 import { StepSoilInfo } from '@/components/questionnaire/step-soil-info'
 import { StepIrrigation } from '@/components/questionnaire/step-irrigation'
 import { StepLocation } from '@/components/questionnaire/step-location'
+import { submitFieldData } from '@/lib/api'
 
 export const Route = createFileRoute('/questionnaire')({
   component: QuestionnairePage,
@@ -16,13 +19,24 @@ export const Route = createFileRoute('/questionnaire')({
 function QuestionnairePage() {
   const navigate = useNavigate()
   const { data, updateField } = useQuestionnaire()
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = () => {
-    console.log('Form submitted:', data)
-    navigate({
-      to: '/results',
-      search: { data: JSON.stringify(data) },
-    })
+  const handleSubmit = async () => {
+    setSubmitting(true)
+    setError(null)
+
+    try {
+      const result = await submitFieldData(data)
+      navigate({
+        to: '/results',
+        search: { predicted_water_usage: result.predicted_water_usage },
+      })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -75,9 +89,13 @@ function QuestionnairePage() {
 
       {/* Bottom Bar */}
       <div className="fixed bottom-0 left-0 right-0 border-t bg-background p-4">
-        <div className="max-w-4xl mx-auto flex justify-end">
-          <Button size="lg" onClick={handleSubmit}>
-            Submit Questionnaire
+        <div className="max-w-4xl mx-auto flex items-center justify-end gap-4">
+          {error && (
+            <p className="text-sm text-destructive">{error}</p>
+          )}
+          <Button size="lg" onClick={handleSubmit} disabled={submitting}>
+            {submitting && <Loader2 className="animate-spin mr-2 h-4 w-4" />}
+            {submitting ? 'Submitting...' : 'Submit Questionnaire'}
           </Button>
         </div>
       </div>

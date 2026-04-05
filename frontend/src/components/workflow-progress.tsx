@@ -13,17 +13,17 @@ const questionnaireSteps = [
     id: "crop-info",
     label: "Crop Information",
     checkFields: (data: QuestionnaireData) =>
-      data.crop_type !== "" &&
-      data.field_area !== null &&
-      data.mulching_used !== null,
+      data.Crop_Type !== "" &&
+      data.Field_Area_hectare !== null &&
+      data.Mulching_Used !== "",
   },
   {
     id: "irrigation",
     label: "Irrigation Details",
     checkFields: (data: QuestionnaireData) =>
-      data.irrigation_type !== "" &&
-      data.water_source !== "" &&
-      data.previous_water_usage !== null,
+      data.Irrigation_Type !== "" &&
+      data.Water_Source !== "" &&
+      data.Previous_Irrigation_mm !== null,
   },
   {
     id: "location",

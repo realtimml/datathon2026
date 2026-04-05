@@ -1,5 +1,5 @@
-import { useMemo } from "react"
-import { createFileRoute } from "@tanstack/react-router"
+import { useEffect, useMemo } from "react"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { Card } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { MetricCard } from "@/components/results/metric-card"
@@ -10,18 +10,38 @@ import { ForecastChart } from "@/components/results/forecast-chart"
 import { WorkflowProgress } from "@/components/workflow-progress"
 import { generateMockForecast } from "@/lib/mock-forecast"
 
+interface ResultsSearch {
+  predicted_water_usage?: number
+}
+
 export const Route = createFileRoute("/results")({
+  validateSearch: (search: Record<string, unknown>): ResultsSearch => ({
+    predicted_water_usage: Number(search.predicted_water_usage) || undefined,
+  }),
   component: ResultsPage,
 })
 
 function ResultsPage() {
-  const waterNeededLiters = 12500
-  const pumpingCost = 45.5
+  const { predicted_water_usage } = Route.useSearch()
+  const navigate = useNavigate()
+
+  const waterNeededLiters = predicted_water_usage ?? 0
+  const pumpingCost = waterNeededLiters * 0.0036
 
   const forecast = useMemo(
     () => generateMockForecast(waterNeededLiters, pumpingCost),
     [waterNeededLiters, pumpingCost],
   )
+
+  useEffect(() => {
+    if (!predicted_water_usage) {
+      navigate({ to: "/questionnaire" })
+    }
+  }, [predicted_water_usage, navigate])
+
+  if (!predicted_water_usage) {
+    return null
+  }
 
   return (
     <div className="flex min-h-[calc(100vh-8rem)]">

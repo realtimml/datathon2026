@@ -30,12 +30,12 @@ export function StepIrrigation({ data, updateField }: StepIrrigationProps) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <Label htmlFor="irrigation_type">Irrigation Type</Label>
+        <Label htmlFor="Irrigation_Type">Irrigation Type</Label>
         <Select
-          value={data.irrigation_type}
-          onValueChange={(value) => updateField("irrigation_type", value)}
+          value={data.Irrigation_Type}
+          onValueChange={(value) => updateField("Irrigation_Type", value)}
         >
-          <SelectTrigger id="irrigation_type">
+          <SelectTrigger id="Irrigation_Type">
             <SelectValue placeholder="Select irrigation type" />
           </SelectTrigger>
           <SelectContent>
@@ -49,12 +49,12 @@ export function StepIrrigation({ data, updateField }: StepIrrigationProps) {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="water_source">Water Source</Label>
+        <Label htmlFor="Water_Source">Water Source</Label>
         <Select
-          value={data.water_source}
-          onValueChange={(value) => updateField("water_source", value)}
+          value={data.Water_Source}
+          onValueChange={(value) => updateField("Water_Source", value)}
         >
-          <SelectTrigger id="water_source">
+          <SelectTrigger id="Water_Source">
             <SelectValue placeholder="Select water source" />
           </SelectTrigger>
           <SelectContent>
@@ -68,20 +68,20 @@ export function StepIrrigation({ data, updateField }: StepIrrigationProps) {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="previous_water_usage">
-          Previous Water Usage (mm)
+        <Label htmlFor="Previous_Irrigation_mm">
+          Previous Irrigation (mm)
         </Label>
         <Input
-          id="previous_water_usage"
+          id="Previous_Irrigation_mm"
           type="number"
-          placeholder="Enter previous water usage"
+          placeholder="Enter previous irrigation amount"
           min="0"
           max="500"
           step="1"
-          value={data.previous_water_usage ?? ""}
+          value={data.Previous_Irrigation_mm ?? ""}
           onChange={(e) =>
             updateField(
-              "previous_water_usage",
+              "Previous_Irrigation_mm",
               e.target.value ? parseFloat(e.target.value) : null
             )
           }
