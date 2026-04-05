@@ -1,4 +1,5 @@
-import { MapPin } from "lucide-react"
+import { useState } from "react"
+import { MapPin, Loader2 } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -13,9 +14,42 @@ interface StepLocationProps {
 }
 
 export function StepLocation({ data, updateField }: StepLocationProps) {
+  const [locating, setLocating] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
   const handleGeolocation = () => {
-    // Visual only - implementation to be added later
-    console.log("Geolocation button clicked - not implemented yet")
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by your browser")
+      return
+    }
+
+    setLocating(true)
+    setError(null)
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        updateField("latitude", parseFloat(position.coords.latitude.toFixed(6)))
+        updateField("longitude", parseFloat(position.coords.longitude.toFixed(6)))
+        setLocating(false)
+      },
+      (err) => {
+        setLocating(false)
+        switch (err.code) {
+          case err.PERMISSION_DENIED:
+            setError("Location permission denied. Please allow access or enter manually.")
+            break
+          case err.POSITION_UNAVAILABLE:
+            setError("Location unavailable. Please enter coordinates manually.")
+            break
+          case err.TIMEOUT:
+            setError("Location request timed out. Please try again.")
+            break
+          default:
+            setError("Could not get your location. Please enter manually.")
+        }
+      },
+      { enableHighAccuracy: true, timeout: 10000 },
+    )
   }
 
   return (
@@ -29,10 +63,18 @@ export function StepLocation({ data, updateField }: StepLocationProps) {
           variant="outline"
           className="w-full"
           onClick={handleGeolocation}
+          disabled={locating}
         >
-          <MapPin className="mr-2 h-4 w-4" />
-          Use My Location
+          {locating ? (
+            <Loader2 data-icon="inline-start" className="animate-spin" />
+          ) : (
+            <MapPin data-icon="inline-start" />
+          )}
+          {locating ? "Locating…" : "Use My Location"}
         </Button>
+        {error && (
+          <p className="text-sm text-destructive mt-2">{error}</p>
+        )}
       </div>
 
       <div className="relative">
