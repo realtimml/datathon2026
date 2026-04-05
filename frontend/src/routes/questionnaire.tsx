@@ -5,6 +5,7 @@ import { useQuestionnaire } from '@/hooks/use-questionnaire'
 import { WorkflowProgress } from '@/components/workflow-progress'
 import { SectionCard } from '@/components/questionnaire/section-card'
 import { StepCropInfo } from '@/components/questionnaire/step-crop-info'
+import { StepSoilInfo } from '@/components/questionnaire/step-soil-info'
 import { StepIrrigation } from '@/components/questionnaire/step-irrigation'
 import { StepLocation } from '@/components/questionnaire/step-location'
 
@@ -44,6 +45,14 @@ function QuestionnairePage() {
             description="Tell us about your crop and field"
           >
             <StepCropInfo data={data} updateField={updateField} />
+          </SectionCard>
+
+          <SectionCard
+            id="soil-info"
+            title="Soil Information"
+            description="Describe your field's soil characteristics"
+          >
+            <StepSoilInfo data={data} updateField={updateField} />
           </SectionCard>
 
           <SectionCard
