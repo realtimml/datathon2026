@@ -40,7 +40,7 @@ function HomePage() {
             />
           </div>
           <CardContent className="flex flex-col justify-center gap-4 p-6 md:p-8">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">
               Welcome to Datathon 2026
             </h1>
             <p className="text-lg text-muted-foreground">
