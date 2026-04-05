@@ -11,18 +11,18 @@ export const Route = createFileRoute('/')({
 const features = [
   {
     icon: Droplets,
-    title: "Water Analysis",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.",
+    title: "Optimize Water Usage",
+    description: "Our Machine Learning models take into account various factors such as weather conditions, soil type, and crop requirements to help you find the minimum amount of usage, maximizing you business’s crop yields. Save water and reduce costs with the cutting-edge technology at your fingertips.",
   },
   {
     icon: Calculator,
-    title: "Cost Estimation",
-    description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+    title: "Estimate Costs",
+    description: "Estimate your irrigation costs with precision. We pair our pinpoint-accurate metrics with electricity rates local to your buisness to provide you with accurate cost predictions. Make informed decisions and optimize your budget effectively.",
   },
   {
     icon: BarChart3,
-    title: "Productivity Index",
-    description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.",
+    title: "Forecast into the Future",
+    description: "Our five-day forecasts provide you with insights into future irrigation needs. By analyzing historical data and current conditions, we help you plan ahead and make proactive decisions to ensure optimal crop health and resource management.",
   },
 ]
 
@@ -41,11 +41,10 @@ function HomePage() {
           </div>
           <CardContent className="flex flex-col justify-center gap-4 p-6 md:p-8">
             <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">
-              Optimize Your Irrigation with AI-Powered Insights
+              Precision in every drop.
             </h1>
             <p className="text-lg text-muted-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Maximize your irrigation effectiveness while minimizing costs. Leverage our in-house Machine Learning models to optimize your business’s efficency. Join us in revolutionizing agriculture for a sustainable future.
             </p>
             <div className="pt-2">
               <Button asChild size="lg">
