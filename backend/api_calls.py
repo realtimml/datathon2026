@@ -1,3 +1,5 @@
+from urllib import response
+
 import requests
 
 def get_temperature(latitude, longitude):

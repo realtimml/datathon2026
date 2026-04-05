@@ -5,14 +5,19 @@ from datetime import datetime
 from backend.api_calls import get_global_region, get_humidity, get_sunshine_duration, get_temperature, get_wind_speed, get_season
 
 class FieldData(BaseModel):
-    crop_type: str
-    field_area: float
-    irrigation_type: str
-    water_source: str
-    mulching_used: bool
-    previous_water_usage: float
-    latitude: float
-    longitude: float
+    Soil_Type: str # TODO: provided by frontend
+    Soil_pH: float # TODO:  provided by frontend
+    Electrical_Conductivity: float # TODO: provided by frontend
+    Crop_Type: str # provided by frontend
+    Crop_Growth_Stage: str # TODO: provided by frontend
+    Irrigation_Type: str # provided by frontend
+    Water_Source: str # provided by frontend
+    Field_Area_hectare: float # provided by frontend
+    Mulching_Used: str # provided by frontend
+    Previous_Irrigation_mm: float # provided by frontend
+    Organic_Carbon: float # provided by frontend
+    latitude: float # provided by frontend
+    longitude: float # provided by frontend
 
 def ml_model(pre_data: FieldData, temperature: float, wind_speed: float, sunshine_duration: float, humidity: float, season: str, region: str) -> float:
     # Placeholder for ML model logic
