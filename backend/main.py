@@ -2,10 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime
-from backend.api_calls import get_global_region, get_humidity, get_sunshine_duration, get_temperature, get_wind_speed, get_season, get_yearly_average_rainfall
-from backend.model import ModelInput, predict
+from api_calls import get_global_region, get_humidity, get_sunshine_duration, get_temperature, get_wind_speed, get_season, get_yearly_average_rainfall
+from model import ModelInput, predict
 
-from backend.api_calls import get_temperature
+from api_calls import get_temperature
 
 class FieldData(BaseModel):
     Soil_Type: str # TODO: provided by frontend
