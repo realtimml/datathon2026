@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime
-from backend.api_calls import get_humidity, get_sunshine_duration, get_temperature, get_wind_speed, get_season
+from backend.api_calls import get_global_region, get_humidity, get_sunshine_duration, get_temperature, get_wind_speed, get_season
 
 class FieldData(BaseModel):
     crop_type: str
@@ -14,7 +14,7 @@ class FieldData(BaseModel):
     latitude: float
     longitude: float
 
-def ml_model(pre_data: FieldData, temperature: float, wind_speed: float, sunshine_duration: float, humidity: float, season: str) -> float:
+def ml_model(pre_data: FieldData, temperature: float, wind_speed: float, sunshine_duration: float, humidity: float, season: str, region: str) -> float:
     # Placeholder for ML model logic
     # In a real implementation, this function would load a trained ML model and use it to make predictions based on input data
     # field data consists of the pydantic data strucuture above, input into ml model then spit out API call :>
@@ -64,7 +64,8 @@ async def receive_field_data(field_data: FieldData):
         sunshine_duration = get_sunshine_duration(field_data.latitude, field_data.longitude)
         humidity = get_humidity(field_data.latitude, field_data.longitude)
         season = get_season(now.month)
-        ml_output = ml_model(field_data, temp, wind_speed, sunshine_duration, humidity, season)
+        region = get_global_region(field_data.latitude, field_data.longitude)
+        ml_output = ml_model(field_data, temp, wind_speed, sunshine_duration, humidity, season, region)
         return {"success": True, "predicted_water_usage": ml_output}
     except Exception as e:
         print(f"Error processing field data: {e}")

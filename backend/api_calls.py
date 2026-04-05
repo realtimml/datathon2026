@@ -52,3 +52,44 @@ def get_season(month: int):
         return "Rabi"
     else:                                   # April – May
         return "Zaid"
+    
+
+def get_global_region(latitude: float, longitude: float) -> str:
+    """
+    Returns the broad global directional region based on latitude and longitude.
+
+    Global Region Boundaries:
+    NORTH  │  lat > 55°N  (Northern Europe, Russia, Canada, Alaska)
+    SOUTH  │  lat < -23°S (Sub-Saharan Africa, S. America, Australia)
+    EAST   │  lon > 45°E  and lat between -23°S and 55°N 
+    │         │  (Asia, South Asia, SE Asia, Middle East, East Africa) 
+    WEST   │  lon < -30°W and lat between -23°S and 55°N             
+    │         │  (North America, Caribbean, South America)               
+    CENTRAL│  lon between -30°W and 45°E, lat between -23°S and 55°N
+    │         │  (Western/Central Europe, North Africa, West Africa) 
+    """
+    if not -90.0 <= latitude <= 90.0:
+        raise ValueError(f"Invalid latitude '{latitude}'. Must be between -90 and 90.")
+    if not -180.0 <= longitude <= 180.0:
+        raise ValueError(f"Invalid longitude '{longitude}'. Must be between -180 and 180.")
+
+    # Latitude/longitude thresholds
+    NORTH_LAT_THRESHOLD   =  55.0
+    SOUTH_LAT_THRESHOLD   = -23.0
+    EAST_LON_THRESHOLD    =  45.0
+    WEST_LON_THRESHOLD    = -30.0 
+
+    if latitude > NORTH_LAT_THRESHOLD:
+        return "North"
+
+    if latitude < SOUTH_LAT_THRESHOLD:
+        return "South"
+
+    # Mid-latitude band: use longitude to determine East / West / Central
+    if longitude > EAST_LON_THRESHOLD:
+        return "East"
+
+    if longitude < WEST_LON_THRESHOLD:
+        return "West"
+
+    return "Central"
