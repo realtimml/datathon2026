@@ -1,3 +1,4 @@
+import datetime
 from urllib import response
 
 import requests
@@ -17,12 +18,41 @@ def get_humidity(latitude, longitude):
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
-        return data['daily']['relative_humidity_2m'][0]
+        return data['daily']['relative_humidity_2m_mean'][0]
     else:
         print(f"Error fetching humidity data: {response.status_code}")
         return None
     
 # TODO: rainfall?
+
+def get_yearly_average_rainfall(latitude, longitude):
+    start_year = 2020
+    end_year = datetime.date.today().year - 1
+
+    url = (
+        f"https://archive-api.open-meteo.com/v1/archive?latitude={latitude}&longitude={longitude}&start_date={start_year}-01-01&end_date={end_year}-12-31&daily=rain_sum&timezone=auto"
+    )
+
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        print(f"Error fetching rainfall data: {response.status_code}")
+        return None
+
+    data = response.json()
+    dates = data["daily"]["time"]
+    rains = data["daily"]["rain_sum"]
+
+    yearly_totals = {}
+    for date_str, rain in zip(dates, rains):
+        year = int(date_str[:4])
+        if rain is not None:
+            yearly_totals[year] = yearly_totals.get(year, 0.0) + rain
+
+    if not yearly_totals:
+        return None
+
+    return round(sum(yearly_totals.values()) / len(yearly_totals), 2)
 
 def get_sunshine_duration(latitude, longitude):
     url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&daily=sunshine_duration&timezone=auto&forecast_days=1"
@@ -95,3 +125,15 @@ def get_global_region(latitude: float, longitude: float) -> str:
         return "West"
 
     return "Central"
+
+if __name__ == "__main__":
+    # Example usage
+    lat = 28.6139   # New Delhi, India
+    lon = 77.2090
+    print(f"Temperature at ({lat}, {lon}): {get_temperature(lat, lon)} °C")
+    print(f"Humidity at ({lat}, {lon}): {get_humidity(lat, lon)} %")
+    print(f"Sunshine Duration at ({lat}, {lon}): {get_sunshine_duration(lat, lon)} hours")
+    print(f"Wind Speed at ({lat}, {lon}): {get_wind_speed(lat, lon)} km/h")
+    print(f"Season in month 7: {get_season(7)}")
+    print(f"Global Region for ({lat}, {lon}): {get_global_region(lat, lon)}")
+    print(f"Average Yearly Rainfall at ({lat}, {lon}): {get_yearly_average_rainfall(lat, lon)} mm")
