@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { Droplets, Calculator, BarChart3 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ImagePlaceholder } from '@/components/image-placeholder'
+import heroImage from '../../assets/hero.jpg'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
@@ -33,15 +33,15 @@ function HomePage() {
       <Card className="flex-1">
         <div className="grid md:grid-cols-2 h-full">
           <div className="p-6 md:p-8 flex items-center">
-            <ImagePlaceholder
-              aspectRatio="video"
-              label="Hero illustration"
-              className="w-full h-full min-h-[200px]"
+            <img
+              src={heroImage}
+              alt="Irrigation field with sprinklers"
+              className="w-full h-full min-h-[200px] rounded-lg object-cover"
             />
           </div>
           <CardContent className="flex flex-col justify-center gap-4 p-6 md:p-8">
             <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">
-              Welcome to Datathon 2026
+              Optimize Your Irrigation with AI-Powered Insights
             </h1>
             <p className="text-lg text-muted-foreground">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
