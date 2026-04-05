@@ -34,7 +34,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["test", "localhost link"],  # connect to react dev server :)
+    # allow_origins=["test", "localhost link"],  # connect to react dev server :)
+    allow_origins=["*"],  # Allow all origins for testing; restrict in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
